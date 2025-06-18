@@ -1,9 +1,9 @@
 // Güncellenmiş müzik listesi
 const musicFiles = [
-    {
-        file: "Cigarettes After Sex - Cry.mp3",
-        name: "Cigarettes After Sex - Cry"
-    },
+{
+    file: "Cigarettes After Sex - Cry.mp3",
+    name: "Cigarettes After Sex - Cry"
+},
 {
     file: "Izzamuzzic, Julien Marchal - Shootout.mp3",
     name: "Izzamuzzic, Julien Marchal - Shootout"
