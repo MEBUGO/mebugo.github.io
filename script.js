@@ -1,69 +1,25 @@
 // Müzik sistemi
 const musicFiles = [
-    { 
-        file: "Aimer - After Rain.mp3", 
-        name: "Aimer - After Rain"
+    {
+        file: "Cigarettes After Sex - Cry.mp3",
+        name: "Cigarettes After Sex - Cry"
     },
-    { 
-        file: "Aimyon - Her Blue Sky.mp3", 
-        name: "Aimyon - Her Blue Sky"
-    },
-    { 
-        file: "Akano - Ghost In A Flower (From 'A Whisker Away').mp3", 
-        name: "Akano - Ghost In A Flower"
-    },
-    { 
-        file: "Akano - Harumodoki (From 'OreGairu- My Youth Romantic Comedy Is Wrong, As I Expected').mp3", 
-        name: "Akano - Harumodoki"
-    },
-    { 
-        file: "Akano, Broken - Grand Escape (From 'Weathering With You').mp3", 
-        name: "Akano, Broken - Grand Escape"
-    },
-    { 
-        file: "Celeina Ann - Love & Sweet.mp3", 
-        name: "Celeina Ann - Love & Sweet"
-    },
-    { 
-        file: "Hoshimachi Suisei - NEXT COLOR PLANET.mp3", 
-        name: "Hoshimachi Suisei - NEXT COLOR PLANET"
-    },
-    { 
-        file: "Leo Ieiri - Hello.mp3", 
-        name: "Leo Ieiri - Hello"
-    },
-    { 
-        file: "Maaya Sakamoto - プラチナ.mp3", 
-        name: "Maaya Sakamoto - Platinum"
-    },
-    { 
-        file: "kobasolo, Harutya - Natsurenbo.mp3", 
-        name: "kobasolo, Harutya - Natsurenbo"
-    },
-    { 
-        file: "yanaginagi - here and there.mp3", 
-        name: "yanaginagi - here and there"
-    },
-    { 
-        file: "yanaginagi - ユキトキ.mp3", 
-        name: "yanaginagi - Yukitoki"
-    },
-    { 
-        file: "yanaginagi - 春擬き.mp3", 
-        name: "yanaginagi - Harumodoki"
-    },
-    { 
-        file: "yanaginagi - 芽ぐみの雨.mp3", 
-        name: "yanaginagi - Megumi no Ame"
-    },
-    { 
-        file: "ヨルシカ - 花に亡霊.mp3", 
-        name: "Yorushika - Hana ni Bourei"
-    },
-    { 
-        file: "ヨルシカ - 雲と幽霊.mp3", 
-        name: "Yorushika - Kumo to Yuurei"
-    }
+{
+    file: "Izzamuzzic, Julien Marchal - Shootout.mp3",
+    name: "Izzamuzzic, Julien Marchal - Shootout"
+},
+{
+    file: "aekasora - one day in japan.mp3",
+    name: "aekasora - one day in japan"
+},
+{
+    file: "aekasora - rainy day.mp3",
+    name: "aekasora - rainy day"
+},
+{
+    file: "bôa - Duvet.mp3",
+    name: "bôa - Duvet"
+}
 ];
 
 let currentAudio = null;
