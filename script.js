@@ -1,4 +1,4 @@
-// Güncellenmiş müzik listesi
+// Müzik listesi
 const musicFiles = [
 {
     file: "Cigarettes After Sex - Cry.mp3",
