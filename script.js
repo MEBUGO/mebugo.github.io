@@ -1,9 +1,8 @@
-// Yağmur efekti oluştur (optimize edilmiş)
+// Yağmur efekti oluştur
 function createRain() {
     const rainContainer = document.getElementById('rainContainer');
-    const raindropCount = 40; // Performans için azaltılmış
+    const raindropCount = 40;
     
-    // Önceki yağmur damlalarını temizle
     while (rainContainer.firstChild) {
         rainContainer.removeChild(rainContainer.firstChild);
     }
@@ -12,10 +11,7 @@ function createRain() {
         const raindrop = document.createElement('div');
         raindrop.classList.add('raindrop');
         
-        // Rastgele pozisyon
         const posX = Math.random() * 100;
-        
-        // Boyut ve animasyon ayarları
         const size = Math.random() * 1.5 + 1.5;
         const speed = Math.random() * 2 + 5;
         const delay = Math.random() * 2;
@@ -33,12 +29,11 @@ function createRain() {
     }
 }
 
-// Yıldız efekti oluştur (optimize edilmiş)
+// Yıldız efekti oluştur
 function createStars() {
     const starsContainer = document.getElementById('starsContainer');
-    const starCount = 70; // Performans için azaltılmış
+    const starCount = 70;
     
-    // Önceki yıldızları temizle
     while (starsContainer.firstChild) {
         starsContainer.removeChild(starsContainer.firstChild);
     }
@@ -47,14 +42,9 @@ function createStars() {
         const star = document.createElement('div');
         star.classList.add('star');
         
-        // Rastgele pozisyon
         const posX = Math.random() * 100;
         const posY = Math.random() * 100;
-        
-        // Rastgele boyut
         const size = Math.random() * 1.5 + 0.5;
-        
-        // Rastgele parıltı süresi
         const duration = Math.random() * 4 + 2;
         
         star.style.left = `${posX}%`;
@@ -75,38 +65,50 @@ const soundIcon = document.querySelector('.sound-icon');
 const bars = document.querySelector('.bars');
 const dots = document.querySelector('.dots');
 const currentTrack = document.getElementById('currentTrack');
+let musicFiles = [];
+
+// Müzik listesini JSON'dan yükle
+async function loadMusicList() {
+    try {
+        const response = await fetch('music-list.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        musicFiles = await response.json();
+        console.log('Müzik listesi yüklendi:', musicFiles);
+    } catch (error) {
+        console.error('Müzik listesi yüklenemedi:', error);
+        // Hata durumunda sabit bir liste kullan
+        musicFiles = [
+            "Aimer - After Rain.opus",
+            "Aimyon - Her Blue Sky.opus",
+            "Akano - Ghost In A Flower (From 'A Whisker Away').opus"
+        ];
+    }
+}
 
 // Rastgele müzik çal
-function playRandomMusic() {
+async function playRandomMusic() {
+    // Müzik listesi boşsa yükle
+    if (musicFiles.length === 0) {
+        await loadMusicList();
+    }
+    
+    // Hala müzik dosyası yoksa
+    if (musicFiles.length === 0) {
+        currentTrack.textContent = "Müzik dosyası bulunamadı";
+        return;
+    }
+    
     // Önceki müziği durdur
     if (currentAudio) {
         currentAudio.pause();
         currentAudio = null;
     }
     
-    // Müzik dosyaları listesi (sizin listeye göre güncellendi)
-    const opusFiles = [
-        "Aimer - After Rain.opus",
-        "Aimyon - Her Blue Sky.opus",
-        "Akano - Ghost In A Flower (From 'A Whisker Away').opus",
-        "Akano - Harumodoki (From 'OreGairu- My Youth Romantic Comedy Is Wrong, As I Expected').opus",
-        "Akano, Broken - Grand Escape (From 'Weathering With You').opus",
-        "Celeina Ann - Love & Sweet.opus",
-        "Hoshimachi Suisei - NEXT COLOR PLANET.opus",
-        "Leo Ieiri - Hello.opus",
-        "Maaya Sakamoto - プラチナ.opus",
-        "kobasolo, Harutya - Natsurenbo.opus",
-        "yanaginagi - here and there.opus",
-        "yanaginagi - ユキトキ.opus",
-        "yanaginagi - 春擬き.opus",
-        "yanaginagi - 芽ぐみの雨.opus",
-        "ヨルシカ - 花に亡霊.opus",
-        "ヨルシカ - 雲と幽霊.opus"
-    ];
-    
     // Rastgele bir müzik seç
-    const randomIndex = Math.floor(Math.random() * opusFiles.length);
-    const selectedFile = opusFiles[randomIndex];
+    const randomIndex = Math.floor(Math.random() * musicFiles.length);
+    const selectedFile = musicFiles[randomIndex];
     
     // Dosya adını uzantısız olarak al
     const fileName = selectedFile.replace('.opus', '');
@@ -115,7 +117,7 @@ function playRandomMusic() {
     currentAudio = new Audio(`audios/${selectedFile}`);
     currentAudio.loop = true;
     
-    // Müzik bilgisini güncelle (sadece dosya adı)
+    // Müzik bilgisini güncelle
     currentTrack.textContent = fileName;
     
     // Müziği oynat
@@ -164,7 +166,10 @@ function setupSoundControl() {
 }
 
 // Sayfa yüklendiğinde efektleri ve müziği başlat
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
+    // Önce müzik listesini yükle
+    await loadMusicList();
+    
     createRain();
     createStars();
     
@@ -175,7 +180,7 @@ window.addEventListener('load', () => {
     document.getElementById('profileImage').src = `https://github.com/MEBUGO.png?t=${new Date().getTime()}`;
     
     // Müzik çalmayı başlat
-    playRandomMusic();
+    await playRandomMusic();
     setupSoundControl();
 });
 
