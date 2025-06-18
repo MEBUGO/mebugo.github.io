@@ -1,43 +1,40 @@
 // Farklı mor tonları
 const purpleShades = [
-    '#b478ff', // Açık mor
-    '#8a2be2', // Orta mor
-    '#5a0a8a', // Koyu mor
-    '#d9b3ff', // Açık pembe-mor
-    '#ff6ec7', // Pembe
-    '#b03060'  // Bordo
+    '#b478ff',
+    '#8a2be2',
+    '#5a0a8a',
+    '#d9b3ff',
+    '#ff6ec7',
+    '#b03060'
 ];
 
-// Kayan yıldız efekti oluştur
+// Kayan yıldız efekti
 function createShootingStars() {
     const container = document.getElementById('shootingStarsContainer');
-    const starCount = 75; // %25 daha az yıldız
+    const starCount = 75;
     
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.classList.add('shooting-star');
         
-        // Rastgele uzunluk
-        const length = Math.random() * 100 + 50;
-        
-        // Rastgele renk (mor tonlarından)
+        const length = Math.random() * 200 + 150;
         const colorIndex = Math.floor(Math.random() * purpleShades.length);
         const color = purpleShades[colorIndex];
-        
-        // Rastgele hız ve gecikme
-        const duration = Math.random() * 8 + 4; // 4-12 saniye
+        const duration = Math.random() * 8 + 4;
         const delay = Math.random() * 15;
-        
-        // Rastgele başlangıç pozisyonu (daha geniş alana yayılmış)
         const startX = Math.random() * 100;
         const startY = Math.random() * 30;
         
         star.style.width = `${length}px`;
-        star.style.background = `linear-gradient(to right, ${color}, transparent)`;
+        star.style.background = `linear-gradient(to right, ${color} 0%, ${color} 30%, transparent 100%)`;
         star.style.animationDuration = `${duration}s`;
         star.style.animationDelay = `${delay}s`;
         star.style.left = `${startX}%`;
         star.style.top = `${startY}%`;
+        
+        star.addEventListener('animationend', function() {
+            star.remove();
+        });
         
         container.appendChild(star);
     }
@@ -72,7 +69,6 @@ function setupSoundControl() {
             this.querySelector('.bars').style.display = 'flex';
             this.querySelector('.dots').style.display = 'none';
             
-            // Müziği devam ettir
             if (currentAudio) {
                 currentAudio.play();
             }
@@ -82,7 +78,6 @@ function setupSoundControl() {
             this.querySelector('.bars').style.display = 'none';
             this.querySelector('.dots').style.display = 'flex';
             
-            // Müziği duraklat
             if (currentAudio) {
                 currentAudio.pause();
             }
@@ -92,10 +87,10 @@ function setupSoundControl() {
 
 // Müzik sistemi
 const musicFiles = [
-    { name: "Brown Dust 2 OST", file: "browndust2ost.opus" },
-    { name: "Ender Lilies Harmony", file: "enderliliesharmony.opus" },
-    { name: "Ender Lilies Lily", file: "enderliliesLily.opus" },
-    { name: "Symphony of Destiny", file: "taktopsymphonybgmofdestiny.opus" }
+    { name: "Brown Dust 2 - Main Theme OST", file: "browndust2ost.opus" },
+    { name: "Ender Lilies - Harmony", file: "enderliliesharmony.opus" },
+    { name: "Ender Lilies - Lily", file: "enderliliesLily.opus" },
+    { name: "Symphony No.5 in c minor Op.67 'Destiny(Unmei) Cosette...'", file: "taktopsymphonybgmofdestiny.opus" }
 ];
 
 let currentAudio = null;
@@ -105,43 +100,36 @@ const currentTrack = document.getElementById('currentTrack');
 const modal = document.getElementById('musicModal');
 let musicEnabled = false;
 
-// Rastgele müzik seç ve oynat
+// Rastgele müzik çal
 function playRandomMusic() {
     if (!musicEnabled) return;
     
-    // Önceki müziği durdur
     if (currentAudio) {
         currentAudio.pause();
         currentAudio = null;
     }
     
-    // Rastgele bir müzik seç
     const randomIndex = Math.floor(Math.random() * musicFiles.length);
     const selectedMusic = musicFiles[randomIndex];
     
-    // Audio elementini oluştur
     currentAudio = new Audio(`audios/${selectedMusic.file}`);
     currentAudio.loop = true;
     
-    // Müzik bilgisini güncelle
     currentTrackInfo.textContent = selectedMusic.name;
     currentTrack.textContent = selectedMusic.name;
     
-    // Müzik bilgisini göster
     musicInfo.classList.add('show');
     
-    // Müziği oynat
     currentAudio.play().catch(e => {
         console.log("Müzik oynatma hatası:", e);
     });
     
-    // Müzik bilgisini 6 saniye sonra gizle
     setTimeout(() => {
         musicInfo.classList.remove('show');
     }, 6000);
 }
 
-// Modal olay yöneticileri
+// Modal olayları
 document.getElementById('musicOn').addEventListener('click', function() {
     musicEnabled = true;
     modal.classList.remove('show');
@@ -154,12 +142,10 @@ document.getElementById('musicOff').addEventListener('click', function() {
     modal.classList.remove('show');
     setTimeout(() => modal.style.display = "none", 400);
     
-    // Müziği durdur
     if (currentAudio) {
         currentAudio.pause();
     }
     
-    // Ses ikonunu muted yap
     const soundIcon = document.getElementById('soundIcon');
     soundIcon.classList.remove('playing');
     soundIcon.classList.add('muted');
@@ -167,7 +153,7 @@ document.getElementById('musicOff').addEventListener('click', function() {
     soundIcon.querySelector('.dots').style.display = 'flex';
 });
 
-// Müzik bitince yeni müzik oynat
+// Müzik bitiş dinleyicisi
 function setupMusicEndListener() {
     if (currentAudio) {
         currentAudio.onended = function() {
@@ -176,26 +162,26 @@ function setupMusicEndListener() {
     }
 }
 
-// M tuşuyla müzik bilgisini göster/gizle
+// M tuşu ile müzik bilgisi
 document.addEventListener('keydown', function(e) {
     if (e.key === 'm' || e.key === 'M') {
         musicInfo.classList.toggle('show');
     }
 });
 
-// Sayfa yüklendiğinde efektleri oluştur ve müzik modalını göster
+// Sayfa yükleme
 window.addEventListener('load', () => {
     createShootingStars();
     setupMouseLight();
     setupSoundControl();
     
-    // GitHub profil resmini güncelle
+    // Profil resmini güncelle
     document.getElementById('profileImage').src = `https://github.com/MEBUGO.png?t=${new Date().getTime()}`;
     
-    // Yıldızları periyodik olarak yenile
+    // Yıldızları yenile
     setInterval(createShootingStars, 10000);
     
-    // Müzik modalını göster
+    // Modalı göster
     modal.style.display = "flex";
     setTimeout(() => modal.classList.add('show'), 100);
 });
