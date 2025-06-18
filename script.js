@@ -64,13 +64,8 @@ function selectRandomTrack() {
     return musicFiles[randomIndex];
 }
 
-// Rastgele müzik çal
-function playRandomMusic() {
-    if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
-    }
-
+// Müzik çalma işlemi
+function playMusic() {
     const selectedTrack = selectRandomTrack();
 
     // Audio elementini oluştur
@@ -90,11 +85,10 @@ function playRandomMusic() {
         console.log("Müzik oynatma hatası:", e);
         isPlaying = false;
         updateSoundIcon();
-        currentTrack.textContent = "Ses çalınamıyor";
     });
 
     // Müzik bitince yeni müzik çal
-    currentAudio.onended = () => playRandomMusic();
+    currentAudio.onended = () => playMusic();
 }
 
 // Ses ikonunu güncelle
@@ -136,10 +130,17 @@ window.addEventListener('load', async () => {
     setupSoundControl();
 
     // Müziği otomatik başlat
-    playRandomMusic();
+    playMusic();
 });
 
 // Pencere boyutu değiştiğinde efektleri yeniden oluştur
 window.addEventListener('resize', () => {
     createStars();
+});
+
+// Sayfada herhangi bir yere tıklama ile müziği başlat
+document.body.addEventListener('click', () => {
+    if (!currentAudio) {
+        playMusic();
+    }
 });
