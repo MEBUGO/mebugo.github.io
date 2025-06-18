@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Yağmur Efekti -->
-    <div class="rain" id="rainContainer"></div>
-    
     <!-- Yıldız Efekti -->
     <div class="stars" id="starsContainer"></div>
     
@@ -25,7 +22,7 @@
         </div>
         
         <div class="social-links">
-            <a href="<https://discord.com/users/667308032144703519>" target="_blank" class="social-link discord">
+            <a href="https://discord.com/users/667308032144703519" target="_blank" class="social-link discord">
                 <i class="fab fa-discord"></i> Discord
             </a>
             
@@ -63,6 +60,20 @@
     <div id="trackInfo" class="track-info">
         <i class="fas fa-music"></i>
         <span id="currentTrack">Müzik Yükleniyor...</span>
+    </div>
+
+    <!-- Modal -->
+    <div id="musicModal" class="modal">
+        <div class="modal-content">
+            <h3>
+                <span>This website has music feature in it.</span>
+                <span style="display: block;">Would you like to turn it on?</span>
+            </h3>
+            <div class="modal-buttons">
+                <button id="musicOn" class="on-btn">Turn on</button>
+                <button id="musicOff" class="off-btn">Turn off</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
