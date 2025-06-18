@@ -1,33 +1,78 @@
-// Yağmur efekti oluştur
-function createRain() {
-    const rainContainer = document.getElementById('rainContainer');
-    const raindropCount = 40;
-    
-    while (rainContainer.firstChild) {
-        rainContainer.removeChild(rainContainer.firstChild);
+// Müzik sistemi
+const musicFiles = [
+    { 
+        file: "Aimer - After Rain.mp3", 
+        name: "Aimer - After Rain"
+    },
+    { 
+        file: "Aimyon - Her Blue Sky.mp3", 
+        name: "Aimyon - Her Blue Sky"
+    },
+    { 
+        file: "Akano - Ghost In A Flower (From 'A Whisker Away').mp3", 
+        name: "Akano - Ghost In A Flower"
+    },
+    { 
+        file: "Akano - Harumodoki (From 'OreGairu- My Youth Romantic Comedy Is Wrong, As I Expected').mp3", 
+        name: "Akano - Harumodoki"
+    },
+    { 
+        file: "Akano, Broken - Grand Escape (From 'Weathering With You').mp3", 
+        name: "Akano, Broken - Grand Escape"
+    },
+    { 
+        file: "Celeina Ann - Love & Sweet.mp3", 
+        name: "Celeina Ann - Love & Sweet"
+    },
+    { 
+        file: "Hoshimachi Suisei - NEXT COLOR PLANET.mp3", 
+        name: "Hoshimachi Suisei - NEXT COLOR PLANET"
+    },
+    { 
+        file: "Leo Ieiri - Hello.mp3", 
+        name: "Leo Ieiri - Hello"
+    },
+    { 
+        file: "Maaya Sakamoto - プラチナ.mp3", 
+        name: "Maaya Sakamoto - Platinum"
+    },
+    { 
+        file: "kobasolo, Harutya - Natsurenbo.mp3", 
+        name: "kobasolo, Harutya - Natsurenbo"
+    },
+    { 
+        file: "yanaginagi - here and there.mp3", 
+        name: "yanaginagi - here and there"
+    },
+    { 
+        file: "yanaginagi - ユキトキ.mp3", 
+        name: "yanaginagi - Yukitoki"
+    },
+    { 
+        file: "yanaginagi - 春擬き.mp3", 
+        name: "yanaginagi - Harumodoki"
+    },
+    { 
+        file: "yanaginagi - 芽ぐみの雨.mp3", 
+        name: "yanaginagi - Megumi no Ame"
+    },
+    { 
+        file: "ヨルシカ - 花に亡霊.mp3", 
+        name: "Yorushika - Hana ni Bourei"
+    },
+    { 
+        file: "ヨルシカ - 雲と幽霊.mp3", 
+        name: "Yorushika - Kumo to Yuurei"
     }
-    
-    for (let i = 0; i < raindropCount; i++) {
-        const raindrop = document.createElement('div');
-        raindrop.classList.add('raindrop');
-        
-        const posX = Math.random() * 100;
-        const size = Math.random() * 1.5 + 1.5;
-        const speed = Math.random() * 2 + 5;
-        const delay = Math.random() * 2;
-        const opacity = Math.random() * 0.3 + 0.3;
-        
-        raindrop.style.left = `${posX}%`;
-        raindrop.style.top = `${-10}%`;
-        raindrop.style.width = `${size}px`;
-        raindrop.style.height = `${size * 12}px`;
-        raindrop.style.opacity = opacity;
-        raindrop.style.animationDuration = `${speed}s`;
-        raindrop.style.animationDelay = `${delay}s`;
-        
-        rainContainer.appendChild(raindrop);
-    }
-}
+];
+
+let currentAudio = null;
+let isPlaying = false;
+const soundIcon = document.querySelector('.sound-icon');
+const bars = document.querySelector('.bars');
+const dots = document.querySelector('.dots');
+const currentTrack = document.getElementById('currentTrack');
+const modal = document.getElementById('musicModal');
 
 // Yıldız efekti oluştur
 function createStars() {
@@ -58,68 +103,28 @@ function createStars() {
     }
 }
 
-// Müzik sistemi
-let currentAudio = null;
-let isPlaying = false;
-const soundIcon = document.querySelector('.sound-icon');
-const bars = document.querySelector('.bars');
-const dots = document.querySelector('.dots');
-const currentTrack = document.getElementById('currentTrack');
-let musicFiles = [];
-
-// Müzik listesini JSON'dan yükle
-async function loadMusicList() {
-    try {
-        const response = await fetch('music-list.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        musicFiles = await response.json();
-        console.log('Müzik listesi yüklendi:', musicFiles);
-    } catch (error) {
-        console.error('Müzik listesi yüklenemedi:', error);
-        // Hata durumunda sabit bir liste kullan
-        musicFiles = [
-            "Aimer - After Rain.opus",
-            "Aimyon - Her Blue Sky.opus",
-            "Akano - Ghost In A Flower (From 'A Whisker Away').opus"
-        ];
-    }
+// Rastgele müzik seç
+function selectRandomTrack() {
+    const randomIndex = Math.floor(Math.random() * musicFiles.length);
+    return musicFiles[randomIndex];
 }
 
 // Rastgele müzik çal
-async function playRandomMusic() {
-    // Müzik listesi boşsa yükle
-    if (musicFiles.length === 0) {
-        await loadMusicList();
-    }
-    
-    // Hala müzik dosyası yoksa
-    if (musicFiles.length === 0) {
-        currentTrack.textContent = "Müzik dosyası bulunamadı";
-        return;
-    }
-    
-    // Önceki müziği durdur
+function playRandomMusic() {
     if (currentAudio) {
         currentAudio.pause();
         currentAudio = null;
     }
-    
-    // Rastgele bir müzik seç
-    const randomIndex = Math.floor(Math.random() * musicFiles.length);
-    const selectedFile = musicFiles[randomIndex];
-    
-    // Dosya adını uzantısız olarak al
-    const fileName = selectedFile.replace('.opus', '');
+
+    const selectedTrack = selectRandomTrack();
     
     // Audio elementini oluştur
-    currentAudio = new Audio(`audios/${selectedFile}`);
+    currentAudio = new Audio(`audios/${selectedTrack.file}`);
     currentAudio.loop = true;
     
     // Müzik bilgisini güncelle
-    currentTrack.textContent = fileName;
-    
+    currentTrack.textContent = selectedTrack.name;
+
     // Müziği oynat
     currentAudio.play()
         .then(() => {
@@ -165,27 +170,44 @@ function setupSoundControl() {
     });
 }
 
-// Sayfa yüklendiğinde efektleri ve müziği başlat
+// Sayfa yüklendiğinde
 window.addEventListener('load', async () => {
-    // Önce müzik listesini yükle
-    await loadMusicList();
-    
-    createRain();
     createStars();
-    
-    // Her 20 saniyede bir yağmuru yenile
-    setInterval(createRain, 20000);
     
     // GitHub profil resmini güncelle
     document.getElementById('profileImage').src = `https://github.com/MEBUGO.png?t=${new Date().getTime()}`;
     
-    // Müzik çalmayı başlat
-    await playRandomMusic();
+    // Modalı göster
+    modal.style.display = "flex";
+    setTimeout(() => modal.classList.add('show'), 100);
+    
+    // Ses kontrolünü ayarla
     setupSoundControl();
+});
+
+// Modal olayları
+document.getElementById('musicOn').addEventListener('click', function() {
+    modal.classList.remove('show');
+    setTimeout(() => modal.style.display = "none", 400);
+    playRandomMusic();
+});
+
+document.getElementById('musicOff').addEventListener('click', function() {
+    modal.classList.remove('show');
+    setTimeout(() => modal.style.display = "none", 400);
+    
+    // Müziği durdur
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+    }
+    
+    // Ses ikonunu muted yap
+    isPlaying = false;
+    updateSoundIcon();
 });
 
 // Pencere boyutu değiştiğinde efektleri yeniden oluştur
 window.addEventListener('resize', () => {
-    createRain();
     createStars();
 });
