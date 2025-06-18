@@ -28,7 +28,6 @@ const soundIcon = document.querySelector('.sound-icon');
 const bars = document.querySelector('.bars');
 const dots = document.querySelector('.dots');
 const currentTrack = document.getElementById('currentTrack');
-const modal = document.getElementById('musicModal');
 
 // Yıldız efekti oluştur
 function createStars() {
@@ -81,7 +80,7 @@ function playRandomMusic() {
     // Müzik bilgisini güncelle
     currentTrack.textContent = selectedTrack.name;
 
-    // Müziği oynat
+    // Müziği otomatik başlat
     currentAudio.play()
     .then(() => {
         isPlaying = true;
@@ -133,34 +132,11 @@ window.addEventListener('load', async () => {
     // GitHub profil resmini güncelle
     document.getElementById('profileImage').src = `https://github.com/MEBUGO.png?t=${new Date().getTime()}`;
 
-    // Modalı göster
-    modal.style.display = "flex";
-    setTimeout(() => modal.classList.add('show'), 100);
-
     // Ses kontrolünü ayarla
     setupSoundControl();
-});
 
-// Modal olayları
-document.getElementById('musicOn').addEventListener('click', function() {
-    modal.classList.remove('show');
-    setTimeout(() => modal.style.display = "none", 400);
+    // Müziği otomatik başlat
     playRandomMusic();
-});
-
-document.getElementById('musicOff').addEventListener('click', function() {
-    modal.classList.remove('show');
-    setTimeout(() => modal.style.display = "none", 400);
-
-    // Müziği durdur
-    if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
-    }
-
-    // Ses ikonunu muted yap
-    isPlaying = false;
-    updateSoundIcon();
 });
 
 // Pencere boyutu değiştiğinde efektleri yeniden oluştur

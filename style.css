@@ -1,8 +1,8 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -244,17 +244,17 @@ h1 {
     animation: soundBar 1.2s ease infinite alternate;
 }
 
-.bar:nth-child(1) { 
-    height: 30%; 
-    animation-delay: 0.1s; 
+.bar:nth-child(1) {
+    height: 30%;
+    animation-delay: 0.1s;
 }
-.bar:nth-child(2) { 
-    height: 60%; 
-    animation-delay: 0.3s; 
+.bar:nth-child(2) {
+    height: 60%;
+    animation-delay: 0.3s;
 }
-.bar:nth-child(3) { 
-    height: 90%; 
-    animation-delay: 0.5s; 
+.bar:nth-child(3) {
+    height: 90%;
+    animation-delay: 0.5s;
 }
 
 @keyframes soundBar {
@@ -329,163 +329,40 @@ h1 {
     100% { opacity: 0; }
 }
 
-/* Modal */
-.modal {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.8);
-    opacity: 0;
-    transform: scale(1.1);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.modal.show {
-    opacity: 1;
-    transform: scale(1);
-}
-
-/* Modal content box */
-.modal-content {
-    background: linear-gradient(145deg, #5a0a8a, #8a2be2);
-    margin: auto;
-    padding: 40px;
-    border: none;
-    width: 90%;
-    max-width: 500px;
-    height: auto;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    animation: slide-in 0.5s ease;
-    border: 1px solid rgba(180, 120, 255, 0.6);
-}
-
-.modal-content h3 {
-    color: white;
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-/* Buttons container */
-.modal-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-/* Buttons */
-.modal-buttons button {
-    padding: 14px 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 140px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.modal-buttons button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-.modal-buttons button:active {
-    transform: translateY(0);
-}
-
-/* Primary action button */
-.modal-buttons .on-btn {
-    background: linear-gradient(to right, #4CAF50, #45a049);
-    color: #ffffff;
-}
-
-.modal-buttons .on-btn:hover {
-    background: linear-gradient(to right, #45a049, #3d8f40);
-}
-
-/* Secondary action button */
-.modal-buttons .off-btn {
-    background: linear-gradient(to right, #f44336, #d32f2f);
-    color: #ffffff;
-}
-
-.modal-buttons .off-btn:hover {
-    background: linear-gradient(to right, #d32f2f, #b71c1c);
-}
-
-@keyframes slide-in {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* Responsive */
 @media (max-width: 600px) {
     .social-links {
         grid-template-columns: 1fr;
     }
-    
+
     .profile-img {
         width: 140px;
         height: 140px;
     }
-    
+
     .profile-border {
         width: 160px;
         height: 160px;
     }
-    
+
     h1 {
         font-size: 2.5rem;
     }
-    
+
     .container {
         padding: 25px 20px;
     }
-    
+
     .sound-control {
         bottom: 15px;
         left: 15px;
     }
-    
+
     .track-info {
         bottom: 15px;
         right: 15px;
         max-width: 200px;
         font-size: 12px;
         padding: 8px 12px;
-    }
-    
-    .modal-content {
-        padding: 30px 20px;
-    }
-    
-    .modal-buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .modal-buttons button {
-        width: 100%;
-        min-width: auto;
     }
 }
